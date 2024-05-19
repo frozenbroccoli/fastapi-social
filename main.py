@@ -18,6 +18,13 @@ class Post(BaseModel):
 my_posts = []
 
 
+def find_post(post_id):
+    for post in my_posts:
+        if post_id == post["id"]:
+            return post
+        return {"message": "This post does not exist."}
+
+
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
@@ -26,6 +33,12 @@ async def root():
 @app.get("/posts")
 def get_posts():
     return {"data": "These are your posts."}
+
+
+@app.get("/posts/{post_id}")
+def get_post(post_id: int):
+    post = find_post(post_id)
+    return {**post}
 
 
 @app.post("/posts")
