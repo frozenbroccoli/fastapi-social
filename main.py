@@ -1,3 +1,4 @@
+from random import randrange
 from typing import Optional
 
 from fastapi import FastAPI
@@ -14,6 +15,9 @@ class Post(BaseModel):
     rating: Optional[int] = None
 
 
+my_posts = []
+
+
 @app.get("/")
 async def root():
     return {"message": "Hello World"}
@@ -26,4 +30,7 @@ def get_posts():
 
 @app.post("/posts")
 def create_posts(post: Post):
-    return {"message": "Successfully created posts.", "post": post}
+    post_dict = post.dict()
+    post_dict["id"] = randrange(0, 100000)
+    my_posts.append(post_dict)
+    return {**post_dict}
