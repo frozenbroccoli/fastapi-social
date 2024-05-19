@@ -32,7 +32,7 @@ async def root():
 
 @app.get("/posts")
 def get_posts():
-    return {"data": "These are your posts."}
+    return {"posts": my_posts}
 
 
 @app.get("/posts/{post_id}")
