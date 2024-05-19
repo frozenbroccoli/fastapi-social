@@ -17,4 +17,4 @@ def get_posts():
 @app.post("/createposts")
 def create_posts(payload: dict = Body(...)):
     print(payload)
-    return {"message": "Successfully created posts."}
+    return {"message": "Successfully created posts.", **payload}
