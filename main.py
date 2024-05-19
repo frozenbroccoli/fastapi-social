@@ -1,7 +1,7 @@
 from random import randrange
 from typing import Optional
 
-from fastapi import FastAPI, Response
+from fastapi import FastAPI, Response, status
 from fastapi.params import Body
 from pydantic import BaseModel
 
@@ -41,7 +41,7 @@ def get_post(post_id: int, response: Response):
 
     if post is None:
         post = {"message": "This post does not exist."}
-        response.status_code = 404
+        response.status_code = status.HTTP_404_NOT_FOUND
 
     return {**post}
 
