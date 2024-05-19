@@ -1,7 +1,7 @@
 from random import randrange
 from typing import Optional
 
-from fastapi import FastAPI, Response, status
+from fastapi import FastAPI, Response, status, HTTPException
 from fastapi.params import Body
 from pydantic import BaseModel
 
@@ -40,8 +40,10 @@ def get_post(post_id: int, response: Response):
     post = find_post(post_id)
 
     if post is None:
-        post = {"message": "This post does not exist."}
-        response.status_code = status.HTTP_404_NOT_FOUND
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"A post with post_id: {post_id} does not exist.",
+        )
 
     return {**post}
 
