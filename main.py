@@ -1,7 +1,7 @@
 from random import randrange
 from typing import Optional
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Response
 from fastapi.params import Body
 from pydantic import BaseModel
 
@@ -22,7 +22,7 @@ def find_post(post_id):
     for post in my_posts:
         if post_id == post["id"]:
             return post
-    return {"message": "This post does not exist."}
+    return None
 
 
 @app.get("/")
@@ -36,8 +36,13 @@ def get_posts():
 
 
 @app.get("/posts/{post_id}")
-def get_post(post_id: int):
+def get_post(post_id: int, response: Response):
     post = find_post(post_id)
+
+    if post is None:
+        post = {"message": "This post does not exist."}
+        response.status_code = 404
+
     return {**post}
 
 
