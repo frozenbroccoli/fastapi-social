@@ -22,7 +22,7 @@ def find_post(post_id):
     for post in my_posts:
         if post_id == post["id"]:
             return post
-        return {"message": "This post does not exist."}
+    return {"message": "This post does not exist."}
 
 
 @app.get("/")
