@@ -68,3 +68,18 @@ def delete_post(post_id: int, response: Response):
 
     my_posts.pop(index)
     return {"message": "This post has been successfully deleted.", **post}
+
+
+@app.put("/posts/{post_id}", status_code=status.HTTP_200_OK)
+def update_post(post_id: int, post: Post, response: Response):
+    post_dict = post.dict()
+    index, post = find_post(post_id)
+
+    if index is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=f"A post with post_id: {post_id} does not exist.",
+        )
+
+    my_posts[index].update(**post_dict)
+    return my_posts[index]
