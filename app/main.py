@@ -5,7 +5,7 @@ from fastapi import FastAPI, Response, status, HTTPException
 from fastapi.params import Body
 from pydantic import BaseModel
 
-app = FastAPI()
+app = FastAPI(title='main')
 
 
 class Post(BaseModel):
